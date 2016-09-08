@@ -1,28 +1,28 @@
 # Laravel Valet
 
-- [Introduction](#introduction)
-    - [Valet Or Homestead](#valet-or-homestead)
-- [Installation](#installation)
-    - [Upgrading](#upgrading)
-- [Serving Sites](#serving-sites)
-    - [The "Park" Command](#the-park-command)
-    - [The "Link" Command](#the-link-command)
-    - [Securing Sites With TLS](#securing-sites)
-- [Sharing Sites](#sharing-sites)
-- [Viewing Logs](#viewing-logs)
-- [Custom Valet Drivers](#custom-valet-drivers)
-- [Other Valet Commands](#other-valet-commands)
+- [Bevezetés](#introduction)
+    - [Valet vagy Homestead](#valet-or-homestead)
+- [Telepítés](#installation)
+    - [Frissítés](#upgrading)
+- [Oldalak kiszolgálása](#serving-sites)
+    - [A "Park" Parancs](#the-park-command)
+    - [A "Link" Parancs](#the-link-command)
+    - [Oldalak biztonságosá tétele TLS-el](#securing-sites)
+- [Oldalak megosztása](#sharing-sites)
+- [Napló megtekintése](#viewing-logs)
+- [Egyéni Valet Driver](#custom-valet-drivers)
+- [Egyéb Valet Parancsok](#other-valet-commands)
 
 <a name="introduction"></a>
-## Introduction
+## Bevezetés
 
-Valet is a Laravel development environment for Mac minimalists. No Vagrant, No Apache, No Nginx, No `/etc/hosts` file. You can even share your sites publicly using local tunnels. _Yeah, we like it too._
+A Valet egy Laravel fejlesztői környezet Mac minimalisták számára. Nincs Vagrant, nincs Apache, nincs Nginx, nincs `/etc/hosts` fájl. Még arra is képes vagy ezze, hogy megoszd az oldalaidat publikusan egy helyi tunnel segítségével. _Király, mi is szeretjük._
 
-Laravel Valet configures your Mac to always run [Caddy](https://caddyserver.com) in the background when your machine starts. Then, using [DnsMasq](https://en.wikipedia.org/wiki/Dnsmasq), Valet proxies all requests on the `*.dev` domain to point to sites installed on your local machine.
+A Laravel Valet konfigurálja a Mac-ed hogy mindig induljon el a [Caddy](https://caddyserver.com) a háttében amikor a géped bekapcsol. Aztán, a [DnsMasq](https://en.wikipedia.org/wiki/Dnsmasq)-t használva, az összes `*.dev` domainre érkező kérést egy proxyként a helyi gépedre irányítja át.
 
-In other words, a blazing fast Laravel development environment that uses roughly 7 MB of RAM. Valet isn't a complete replacement for Vagrant or Homestead, but provides a great alternative if you want flexible basics, prefer extreme speed, or are working on a machine with a limited amount of RAM.
+Más szavakkal, egy villámgyors Laravel fejlesztői környezet ami nagyjából 7 MB RAMot emészt fel. A Valet nem a Vagrant vagy Homstead teljes behelyetesítése, de ad egy nagyszerű alternatívát ha csak rugalmas alapokat akarsz, jobban kedveled az extrém sebességet, vagy egy olyan gépen dolgozol melyben a RAM eléggé korlátozott.
 
-Out of the box, Valet support includes, but is not limited to:
+Gyárilag a Valet támogatja, de nem korlátozódik a következőre:
 
 <div class="content-list" markdown="1">
 - [Laravel](https://laravel.com)
@@ -35,19 +35,19 @@ Out of the box, Valet support includes, but is not limited to:
 - [Craft](https://craftcms.com)
 - [Statamic](https://statamic.com)
 - [Jigsaw](http://jigsaw.tighten.co)
-- Static HTML
+- Statikus HTML
 </div>
 
-However, you may extend Valet with your own [custom drivers](#custom-valet-drivers).
+Azonban, valószínűleg ki szeretnéd bővíteni a Valet-et a [saját drivereiddel](#custom-valet-drivers).
 
 <a name="valet-or-homestead"></a>
-### Valet Or Homestead
+### Valet vagy Homestead
 
-As you may know, Laravel offers [Homestead](/docs/{{version}}/homestead), another local Laravel development environment. Homestead and Valet differ in regards to their intended audience and their approach to local development. Homestead offers an entire Ubuntu virtual machine with automated Nginx configuration. Homestead is a wonderful choice if you want a fully virtualized Linux development environment or are on Windows / Linux.
+Valószínűleg tudod, hogy a Laravel kínálatában megtalálod a [Homestead-et](/docs/{{version}}/homestead), egy másik fejlesztői környezetet. A Homestead és Valet leginkább a szánt közönségben és az ő helyi fejlesztői környezet megközelítésében különbözik. A Homestead egy teljes Ubuntu-s virtuális gépet biztosít automatikus Nginx konfigurációval. A Homestead egy nagyszerű választás ha egy teljesen virtualizált Linux fejlesztői környezetre van szükséged, vagy ha Windows-t vagy Linux-ot használsz.
 
-Valet only supports Mac, and requires you to install PHP and a database server directly onto your local machine. This is easily achieved by using [Homebrew](http://brew.sh/) with commands like `brew install php70` and `brew install mariadb`. Valet provides a blazing fast local development environment with minimal resource consumption, so it's great for developers who only require PHP / MySQL and do not need a fully virtualized development environment.
+A valet csak a Mac-et támogatja, és a PHP és adatbázis telepítést neked kell megoldanod a saját helyi gépedre. Ezt könnyen el lehet érni a [Homebrew](http://brew.sh/) parancsainak segítségével mint például: `brew install php70` és `brew install mariadb`. A Valet egy villámgyors helyi fejlesztői környezetet biztosít a számodra nagyon minimális erőforrás felhasználással. Szóval ez egy jó választás azoknak akiknek csak PHP-re és MySQL-re van szüksége, és nem szükséges nekik teljesen virtualizált fejlesztői környezet.
 
-Both Valet and Homestead are great choices for configuring your Laravel development environment. Which one you choose will depend on your personal taste and your team's needs.
+Mind a Valet és Homestead egy remek választás arra, hogy létrehozz egy helyi Laravel fejlesztői környezetet. Az hogy melyiket választod a saját és csapatod izlésére van bízva.
 
 <a name="installation"></a>
 ## Installation
